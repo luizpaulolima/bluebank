@@ -1,0 +1,114 @@
+﻿@using BlueBank.WebApp.Models
+@model BlueBank.WebApp.Models.TransferenciaViewModels
+@{
+    string titulo = "Transferência";
+    List<ErrosGeraisViewModels> errosGerais = ViewBag.ErrosGerais == null ? new List<ErrosGeraisViewModels>() : ViewBag.ErrosGerais;
+    ViewBag.Title = titulo;
+}
+<div class="row">
+    <h3 class="heading">@titulo</h3>
+    <hr />
+    <div class="main_content">
+        @if (errosGerais.Count > 0)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Erro(s)&nbsp;&nbsp;<span class="glyphicon glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body overflow">
+                        <table class="table table-bordered" style="height:100%;width:100%">
+                            <thead>
+                                <tr>
+                                    <td width="10%" align="center"><b>Tipo</b></td>
+                                    <td width="90%" align="center"><b>Mensagem</b></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var erro in errosGerais)
+                                {
+                                    <tr>
+                                        <td align="center">@erro.TipoConta</td>
+                                        <td>@erro.Mensagem</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <fieldset>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>Origem</b></div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ContaOrigem.Agencia, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(model => model.ContaOrigem.Agencia, new { placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(model => model.ContaOrigem.Agencia).ToHtmlString()), @class = "form-control", required = "required", @maxlength = "10", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.ContaOrigem.Agencia)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ContaOrigem.Numero, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(model => model.ContaOrigem.Numero, new { placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(model => model.ContaOrigem.Numero).ToHtmlString()), @class = "form-control", required = "required", @maxlength = "10", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.ContaOrigem.Numero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>Destino</b></div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ContaDestino.Agencia, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(model => model.ContaDestino.Agencia, new { placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(model => model.ContaDestino.Agencia).ToHtmlString()), @class = "form-control", required = "required", @maxlength = "10", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.ContaDestino.Agencia)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ContaDestino.Numero, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-3">
+                                        @Html.TextBoxFor(model => model.ContaDestino.Numero, new { placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(model => model.ContaDestino.Numero).ToHtmlString()), @class = "form-control", required = "required", @maxlength = "10", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.ContaDestino.Numero)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ValorDaTransferencia, new { @class = "col-sm-2 control-label" })
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            @Html.TextBox("ValorDaTransferencia", null, new { placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(model => model.ValorDaTransferencia).ToHtmlString()), @class = "form-control decimal_18_2", required = "required", @autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ValorDaTransferencia)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Transferir</button>
+                        <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Voltar</a>
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>

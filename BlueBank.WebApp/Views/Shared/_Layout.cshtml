@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Blue Bank</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Bootstrap")
+    @Scripts.Render("~/Scripts/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="@Url.Content("~/Content/Imagens/logo.png")" width="24" height="24">
+                </a>
+                @Html.ActionLink("Transferência", "Index", "Transferencia", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/Scripts/Jquery")
+    @Scripts.Render("~/Scripts/jqueryval")
+    @Scripts.Render("~/Scripts/Bootstrap")
+    @Scripts.Render("~/Scripts/JqueryNumeric")
+    @Scripts.Render("~/Scripts/bluebank")
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        corrigeValidacaoParaVirgula();
+        inicializaMascarasNumericas();
+        @if (TempData["ErroTecnico"] != null)
+        {
+            <text>console.log('@MvcHtmlString.Create(TempData["ErroTecnico"].ToString())')</text>
+        }
+    });
+</script>
